@@ -2,14 +2,27 @@
   <img src="https://github.com/user-attachments/assets/305cbe2a-b915-4924-803e-efbe0f725c76" alt="BDKAppIcon2" width="120">
 </p>
 
+<div align="center">
+
 # 📦 BottomDrawerKit – How to Use
 
 [![Swift Package](https://img.shields.io/badge/Swift_Package-Compatible-brightgreen)](...)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Swift Version](https://img.shields.io/badge/swift-6.0-orange.svg)](...)
 [![Xcode](https://img.shields.io/badge/Xcode-16.3-blue)](...)
 [![iOS](https://img.shields.io/badge/iOS-18%2B-blue)](...)
+[![Platforms](https://img.shields.io/badge/platforms-iOS-lightgrey.svg)](...)
+
+[![Version](https://img.shields.io/github/v/tag/adiaz0511/BottomDrawerKit)](https://github.com/adiaz0511/BottomDrawerKit/releases)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+
+[![Stars](https://img.shields.io/github/stars/adiaz0511/BottomDrawerKit.svg?style=social)](...)
+[![Forks](https://img.shields.io/github/forks/adiaz0511/BottomDrawerKit.svg?style=social)](...)
+[![Watchers](https://img.shields.io/github/watchers/adiaz0511/BottomDrawerKit.svg?style=social)](...)
 
 **BottomDrawerKit** lets you present a highly customizable bottom drawer or card in SwiftUI, with smooth transitions, dynamic heights, and full route control.
+
+</div>
+
 
 <div align="center">
 
