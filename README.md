@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/305cbe2a-b915-4924-803e-efbe0f725c76" alt="BDKAppIcon2" width="120">
+</p>
+
 # 📦 BottomDrawerKit – How to Use
 
 [![Swift Package](https://img.shields.io/badge/Swift_Package-Compatible-brightgreen)](...)
@@ -6,6 +10,10 @@
 [![iOS](https://img.shields.io/badge/iOS-18%2B-blue)](...)
 
 **BottomDrawerKit** lets you present a highly customizable bottom drawer or card in SwiftUI, with smooth transitions, dynamic heights, and full route control.
+
+| Drawer | Card |
+|--------|------|
+| ![DrawerRec2](https://github.com/user-attachments/assets/bea6c4af-0b20-48db-8761-ffa83c73aba8) | ![CardRec2](https://github.com/user-attachments/assets/860ec181-7657-4598-b089-e4c2a8a13a6b)|
 
 ---
 
