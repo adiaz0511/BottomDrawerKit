@@ -11,7 +11,7 @@
 Add this to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/your-username/BottomDrawerKit.git", from: "1.0.0")
+.package(url: "https://github.com/adiaz0511/BottomDrawerKit.git", from: "1.0.0")
 ```
 
 Then add `"BottomDrawerKit"` as a dependency to your target.
