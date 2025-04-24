@@ -298,3 +298,9 @@ In previews, inject the router manually:
         .bottomDrawer(style: .drawer)
 }
 ```
+
+---
+
+## License
+
+BottomDrawerKit is licensed under the [Apache License 2.0](LICENSE).
