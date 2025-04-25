@@ -67,6 +67,7 @@ enum BottomDrawerDemoRoute: BottomDrawerRouteable, Identifiable {
                     backgroundColor: Color(hex: "48484a"),
                     borderColor: .clear,
                     shape: .rounded(16),
+                    hapticFeedback: .light,
                     action: {
                         Task {
                             await BottomDrawerRouter.pop()
@@ -98,6 +99,7 @@ enum BottomDrawerDemoRoute: BottomDrawerRouteable, Identifiable {
                     backgroundColor: Color(hex: "48484a"),
                     borderColor: .clear,
                     shape: .rounded(16),
+                    hapticFeedback: .light,
                     action: {
                         Task {
                             await BottomDrawerRouter.pop()
@@ -128,6 +130,7 @@ enum BottomDrawerDemoRoute: BottomDrawerRouteable, Identifiable {
                     backgroundColor: Color(hex: "48484a"),
                     borderColor: .clear,
                     shape: .rounded(16),
+                    hapticFeedback: .light,
                     action: {
                         Task {
                             await BottomDrawerRouter.pop()
@@ -148,6 +151,7 @@ enum BottomDrawerDemoRoute: BottomDrawerRouteable, Identifiable {
                     backgroundColor: .clear,
                     borderColor: .white,
                     shape: .rounded(16),
+                    hapticFeedback: .light,
                     action: {
                         Task {
                             await BottomDrawerRouter.pop()

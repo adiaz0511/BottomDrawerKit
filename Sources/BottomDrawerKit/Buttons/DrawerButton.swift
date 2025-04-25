@@ -18,7 +18,10 @@ internal struct DrawerButton: View {
     @State private var isTransitioning = false
 
     var body: some View {
-        Button(action: config.action) {
+        Button(action: {
+            config.hapticFeedback?.generate()
+            config.action()
+        }) {
             Color.clear
                 .frame(height: 54)
                 .frame(maxWidth: .infinity)

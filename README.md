@@ -223,7 +223,7 @@ BottomDrawerRouter.present(route)
 
 ## 🛠 Configuration Options
 
-Each route can define:
+Each route defines a `Config` struct that controls behavior, layout, buttons, and appearance of the drawer or card.
 
 ```swift
 Config(
@@ -232,6 +232,23 @@ Config(
     height: .points(420),
     initialHeight: .fraction(0.4),
     maxHeight: .fraction(0.9),
+    leftButton: DrawerButtonConfig(
+        title: "Cancel",
+        backgroundColor: .clear,
+        borderColor: .primary,
+        shape: .capsule,
+        hapticFeedback: .light,
+        action: { print("Cancelled!") }
+    ),
+    rightButton: DrawerButtonConfig(
+        title: "Save",
+        icon: "checkmark",
+        backgroundColor: .blue,
+        borderColor: .clear,
+        shape: .capsule,
+        hapticFeedback: .light,
+        action: { print("Saved!") }
+    ),
     visualStyle: VisualStyle(
         background: AnyShapeStyle(Color.black),
         borderColor: .secondary,
@@ -244,7 +261,47 @@ Config(
     onDismiss: { print("Closed!") },
     onDismissAsync: { await fetch() }
 )
-```
+
+### 📏 Layout & Behavior
+
+| Property              | Description                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|
+| `interactiveDismiss`  | Whether the drawer can be dismissed by tapping outside or swiping down      |
+| `dragHandleVisibility`| Controls visibility of the top drag handle (`.visible`, `.hidden`, `.static`)|
+| `height`              | Final resting height of the drawer/card                                    |
+| `initialHeight`       | Initial height for animated expansion                                      |
+| `maxHeight`           | Maximum allowed height                                                     |
+| `onDismiss`           | Closure triggered when the drawer is dismissed (sync)                      |
+| `onDismissAsync`      | Async closure triggered when the drawer is dismissed (for async work)       |
+
+### 🔘 Buttons
+
+| Property     | Description                                                                |
+|--------------|----------------------------------------------------------------------------|
+| `leftButton` | Secondary action button (e.g., "Cancel"). Appears on the left.              |
+| `rightButton`| Primary action button (e.g., "Save"). Appears on the right and is emphasized.|
+
+Each button uses a `DrawerButtonConfig`:
+
+| Config Field       | Description                                                   |
+|--------------------|---------------------------------------------------------------|
+| `title`            | Button label text                                             |
+| `icon`             | Optional SF Symbol (e.g., `"trash"`, `"checkmark"`)           |
+| `backgroundColor`  | Fill color of the button                                      |
+| `borderColor`      | Optional stroke color                                         |
+| `shape`            | Button shape (`.capsule` or `.rounded(cornerRadius)`)         |
+| `hapticFeedback`   | Optional haptic feedback triggered on tap (`.light`, `.medium`, `.heavy`) |
+| `action`           | Closure triggered when the button is tapped                  |
+
+### 🎨 Visual Style (for `.card` only)
+
+| Property     | Description                                                                 |
+|--------------|-----------------------------------------------------------------------------|
+| `background` | Any `ShapeStyle` (e.g., `Color`, `Material`) used as the drawer/card fill   |
+| `borderColor`| Optional border color (used only in `.card`)                               |
+| `shadow`     | Optional shadow (color, radius, offset) for `.card` appearance             |
+
+> **Note:** In `.drawer` style, only the `background` is used. `borderColor` and `shadow` are ignored for consistency with system-like sheets.
 
 ---
 
