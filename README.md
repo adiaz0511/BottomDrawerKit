@@ -4,7 +4,7 @@
 
 <div align="center">
 
-BottomDrawerKit
+# BottomDrawerKit
 
 [![Swift Package](https://img.shields.io/badge/Swift_Package-Compatible-brightgreen)](...)
 [![Swift Version](https://img.shields.io/badge/swift-6.0-orange.svg)](...)
