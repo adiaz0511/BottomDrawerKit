@@ -28,6 +28,8 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
     let drawerStyle: VisualStyle?
     
     let content: Content
+    
+    @State private var keyboardHeight: CGFloat = 0
         
     // MARK: Drag gesture configuration
     var dragGesture: some Gesture {
@@ -165,11 +167,25 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
             .onChange(of: isPresented) { oldValue, value in
                 refreshPresentation(animate: true)
             }
-            .onAppear {
-                refreshPresentation(animate: false)
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            Group {
+                if let style = drawerStyle?.background {
+                    Rectangle().fill(style)
+                } else {
+                    Rectangle().fill(Color(.card))
+                }
+            }
+            .ignoresSafeArea(.container, edges: .bottom)
+            .padding(.bottom, -keyboardHeight)
+        )
+        .offset(y: -keyboardHeight)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onAppear {
+            refreshPresentation(animate: false)
+            observeKeyboardChanges(keyboardHeight: $keyboardHeight)
+        }
     }
     
     private var buttonPaddingHeight: CGFloat {

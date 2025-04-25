@@ -30,6 +30,7 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
     let content: Content
     
     @Environment(\.drawerStyle) private var style
+    @State private var keyboardHeight: CGFloat = 0
 
     // MARK: Drag gesture configuration
     var dragGesture: some Gesture {
@@ -112,7 +113,8 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
     var body: some View {
         ZStack {
             content
-            
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+
             if isPresented {
                 let t = max(min(height / maxHeight, 1), 0)
                 Color.black.opacity(t * 0.1)
@@ -182,10 +184,13 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
                 }
                 .onAppear {
                     refreshPresentation(animate: false)
+                    observeKeyboardChanges(keyboardHeight: $keyboardHeight)
                 }
+                .padding(.bottom, keyboardHeight == 0 ? 0 : 10)
             }
             .offset(y: commonOffset)
         }
+//        .offset(y: -keyboardHeight)
     }
     
     private var commonOffset: CGFloat {
@@ -199,4 +204,3 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
         return 0
     }
 }
-
