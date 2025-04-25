@@ -110,10 +110,8 @@ public final class BottomDrawerRouter: @unchecked Sendable {
                     self.onDismissCallback = nil
                 }
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    self.stack.removeAll()
-                    print("[BottomDrawerRouter] Stack after dismiss: \(self.stack)")
-                }
+                self.stack.removeAll()
+                print("[BottomDrawerRouter] Stack after dismiss: \(self.stack)")
             }
         }
     }
