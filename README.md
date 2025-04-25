@@ -261,6 +261,7 @@ Config(
     onDismiss: { print("Closed!") },
     onDismissAsync: { await fetch() }
 )
+```
 
 ### 📏 Layout & Behavior
 
