@@ -122,8 +122,12 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
                     .transition(.opacity)
                     .animation(.easeInOut, value: isPresented)
                     .onTapGesture {
-                        if interactiveDismiss {
-                            BottomDrawerRouter.shared.dismiss()
+                        if UIResponder.keyboardIsVisible {
+                            dismissKeyboard()
+                        } else {
+                            if interactiveDismiss {
+                                BottomDrawerRouter.shared.dismiss()
+                            }
                         }
                     }
             }

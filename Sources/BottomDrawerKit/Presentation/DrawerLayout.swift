@@ -125,7 +125,13 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
                 )
                 .opacity(isPresented ? 0.95 : 1)
                 .onTapGesture {
-                    BottomDrawerRouter.shared.dismiss()
+                    if UIResponder.keyboardIsVisible {
+                        dismissKeyboard()
+                    } else {
+                        if interactiveDismiss {
+                            BottomDrawerRouter.shared.dismiss()
+                        }
+                    }
                 }
                 .offset(y: isPresented ? -height : 0)
             
