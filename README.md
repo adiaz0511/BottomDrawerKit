@@ -437,10 +437,18 @@ In previews, inject the router manually:
 
 ---
 
+## 🤝 Contributing
+
+Interested in contributing?  
+Please read the [CONTRIBUTING.md](./CONTRIBUTING.md) guide for instructions and guidelines.  
+Thank you for helping make BottomDrawerKit even better! 🚀
+
+---
+
 ## Support
 If you like this project, please consider giving it a ⭐️
 
-
+---
 
 ## License
 
