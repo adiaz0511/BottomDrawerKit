@@ -148,6 +148,7 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
                 }
                 
             }
+            .padding(.top, shouldApplySafeAreaPadding ? safeAreaTopInset : 0)
             .frame(height: height)
             .frame(maxWidth: .infinity)
             .overlay(alignment: .bottom) {
@@ -202,5 +203,15 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
             return 76 // 44 height + 12 top padding + 20 bottom padding
         }
         return 0
+    }
+    
+    private var safeAreaTopInset: CGFloat {
+        (UIApplication.shared.connectedScenes.first as? UIWindowScene)?
+            .windows.first(where: { $0.isKeyWindow })?
+            .safeAreaInsets.top ?? 0
+    }
+
+    private var shouldApplySafeAreaPadding: Bool {
+        initialHeight == UIScreen.main.bounds.height
     }
 }

@@ -329,11 +329,42 @@ protocol RetryableError: Error {
 
 ### 🎨 Visual Style (for `.card` only)
 
-| Property     | Description                                                                 |
-|--------------|-----------------------------------------------------------------------------|
-| `background` | Any `ShapeStyle` (e.g., `Color`, `Material`) used as the drawer/card fill   |
-| `borderColor`| Optional border color (used only in `.card`)                               |
-| `shadow`     | Optional shadow (color, radius, offset) for `.card` appearance             |
+| Property                 | Description                                                                 |
+|---------------------------|-----------------------------------------------------------------------------|
+| `background`              | Any `ShapeStyle` (e.g., `Color`, `Material`) used as the drawer/card fill   |
+| `borderColor`             | Optional border color (used only in `.card`)                               |
+| `shadow`                  | Optional shadow (color, radius, offset) for `.card` appearance             |
+| `drawerStyleOverride`     | Optional `DrawerStyle` to override global corner radius and padding **for this specific route** |
+
+✅ `drawerStyleOverride` allows you to locally override the card's **corner radius** and **horizontal padding**, instead of using the global environment setting.
+
+✅ This is **only used** for `.card` style — drawers ignore this for consistency with system sheets.
+
+✅ It enables advanced behaviors like:
+- Creating **sheet-like** cards (flat top, full-width)
+- Creating **full-screen cards** with smooth safe area adjustment
+- Preventing clipping on rounded corners when content fills the screen
+
+If `drawerStyleOverride` is set:
+- It will automatically account for safe area insets
+- It prevents corner radius artifacts when reaching full device height
+
+Example:
+
+```swift
+Config(
+    height: .fraction(1.0),
+    initialHeight: .fraction(1.0),
+    maxHeight: .fraction(1.0),
+    visualStyle: VisualStyle(
+        background: AnyShapeStyle(.white),
+        drawerStyleOverride: DrawerStyle(
+            cornerRadius: .fixed(0),
+            padding: 0
+        )
+    )
+)
+```
 
 > **Note:** In `.drawer` style, only the `background` is used. `borderColor` and `shadow` are ignored for consistency with system-like sheets.
 

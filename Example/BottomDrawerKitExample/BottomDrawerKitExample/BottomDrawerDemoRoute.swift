@@ -63,13 +63,19 @@ enum BottomDrawerDemoRoute: BottomDrawerRouteable, Identifiable {
                 }
             )
 
+            // Full screen example
         case .showCard:
             return .init(
                 interactiveDismiss: true,
                 dragHandleVisibility: .visible,
-                height: .fraction(0.88),
-                initialHeight: .fraction(0.88),
-                maxHeight: .fraction(0.88)
+                height: .fraction(1),
+                initialHeight: .fraction(1),
+                maxHeight: .fraction(1),
+                visualStyle: .init(
+                    drawerStyleOverride: .init(
+                        padding: 0
+                    )
+                )
             )
             
         case .colorPicker:

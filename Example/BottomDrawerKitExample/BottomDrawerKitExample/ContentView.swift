@@ -384,7 +384,7 @@ struct ShowCardView: View {
             }
         }
         .padding(.top, 20)
-        .frame(maxHeight: UIScreen.main.bounds.height - 200)
+//        .frame(maxHeight: UIScreen.main.bounds.height - 200)
     }
     
     func castMember(name: String, role: String) -> some View {

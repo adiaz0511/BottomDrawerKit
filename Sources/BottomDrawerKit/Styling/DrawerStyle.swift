@@ -16,7 +16,7 @@ public struct DrawerStyle: Sendable {
     public var cornerRadius: CornerRadius
     public var padding: CGFloat
 
-    public init(cornerRadius: CornerRadius = .fixed(20), padding: CGFloat = 16) {
+    public init(cornerRadius: CornerRadius = .device, padding: CGFloat = 16) {
         self.cornerRadius = cornerRadius
         self.padding = padding
     }

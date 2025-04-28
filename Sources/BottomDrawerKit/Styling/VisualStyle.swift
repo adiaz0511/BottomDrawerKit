@@ -7,19 +7,24 @@
 
 import SwiftUI
 
+public let drawerDefaultColor = Color(.card)
+
 public struct VisualStyle {
     public var background: AnyShapeStyle
     public var borderColor: Color?
     public var shadow: Shadow?
+    public var drawerStyleOverride: DrawerStyle?
 
     public init(
-        background: AnyShapeStyle = .init(Color("cardColor", bundle: .main)),
+        background: AnyShapeStyle = AnyShapeStyle(drawerDefaultColor),
         borderColor: Color? = nil,
-        shadow: Shadow? = nil
+        shadow: Shadow? = nil,
+        drawerStyleOverride: DrawerStyle? = nil
     ) {
         self.background = background
         self.borderColor = borderColor
         self.shadow = shadow
+        self.drawerStyleOverride = drawerStyleOverride
     }
 
     public struct Shadow {

@@ -58,6 +58,10 @@ extension DrawerHeight {
     internal func resolved(using screenHeight: CGFloat) -> CGFloat {
         switch self {
         case .fraction(let value):
+            // If full height, do not reduce
+            if value == 1.0 {
+                return screenHeight
+            }
             // Use a dynamic adjustment based on screen height
             let clampedScreenHeight = min(max(screenHeight, 600), 932) // SE to Pro Max
             let scale = (clampedScreenHeight - 600) / (932 - 600) // 0 to 1

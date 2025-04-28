@@ -147,6 +147,7 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
                             .transition(.smoothDrawerReplace)
                     }
                 }
+                .padding(.top, shouldApplySafeAreaPadding ? safeAreaTopInset : 0)
                 // This overlay contains the buttons.
                 .overlay(alignment: .bottom) {
                     if leftButton != nil || rightButton != nil {
@@ -168,10 +169,10 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
                     }
                 }
                 .background(
-                    RoundedRectangle(cornerRadius: style.resolvedCornerRadius, style: .continuous)
+                    RoundedRectangle(cornerRadius: effectiveCornerRadius, style: .continuous)
                         .fill(cardStyle?.background ?? AnyShapeStyle(Color(.card)))
+                        .padding(.all, shouldApplySafeAreaPadding ? -2 : 0)
                 )
-                .clipShape(RoundedRectangle(cornerRadius: style.resolvedCornerRadius, style: .continuous))
                 .shadow(
                     color: cardStyle?.shadow?.color ?? .clear,
                     radius: cardStyle?.shadow?.radius ?? 0,
@@ -179,11 +180,11 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
                     y: cardStyle?.shadow?.offset.height ?? 0
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: style.resolvedCornerRadius, style: .continuous)
+                    RoundedRectangle(cornerRadius: effectiveCornerRadius, style: .continuous)
                         .stroke(cardStyle?.borderColor ?? .clear, lineWidth: 1)
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                .padding([.horizontal, .bottom], style.padding)
+                .padding([.horizontal, .bottom], effectivePadding)
                 .ignoresSafeArea(.container, edges: .bottom)
                 .disabled(!isPresented)
                 .onChange(of: isPresented) { oldValue, value in
@@ -196,8 +197,8 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
                 .padding(.bottom, keyboardHeight == 0 ? 0 : 10)
             }
             .offset(y: commonOffset)
+            .ignoresSafeArea(.container, edges: .top)
         }
-//        .offset(y: -keyboardHeight)
     }
     
     private var commonOffset: CGFloat {
@@ -210,4 +211,24 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
         }
         return 0
     }
+    
+    // MARK: - Effective Style Properties
+    private var effectiveCornerRadius: CGFloat {
+        cardStyle?.drawerStyleOverride?.resolvedCornerRadius ?? style.resolvedCornerRadius
+    }
+
+    private var effectivePadding: CGFloat {
+        cardStyle?.drawerStyleOverride?.padding ?? style.padding
+    }
+    
+    private var safeAreaTopInset: CGFloat {
+        (UIApplication.shared.connectedScenes.first as? UIWindowScene)?
+            .windows.first(where: { $0.isKeyWindow })?
+            .safeAreaInsets.top ?? 0
+    }
+
+    private var shouldApplySafeAreaPadding: Bool {
+        initialHeight == UIScreen.main.bounds.height
+    }
 }
+
