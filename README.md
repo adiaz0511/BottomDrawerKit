@@ -303,8 +303,6 @@ If you want to perform **asynchronous actions**, use the `asyncConfig` property:
 | `maxRetryCount`               | Maximum number of retry attempts allowed after failure. If exceeded, a fallback action will be triggered. |
 | `actionAfterMaxRetries`       | What happens after reaching `maxRetryCount` (`.noAction`, `.pop`, or `.dismiss`). |
 
-### 🎨 DrawerButtonStateAppearance
-
 When setting `successAppearance`, `errorAppearance`, or `tryAgainAppearance`, you can configure:
 
 | Field                          | Description |
@@ -326,6 +324,8 @@ protocol RetryableError: Error {
     var retryTitle: String? { get }
 }
 ```
+
+---
 
 ### 🎨 Visual Style (for `.card` only)
 
