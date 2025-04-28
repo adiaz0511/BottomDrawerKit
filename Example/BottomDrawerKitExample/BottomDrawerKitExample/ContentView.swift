@@ -202,7 +202,8 @@ struct ActionButton: View {
 
 struct NameInputView: View {
     @State private var name: String = ""
-    
+    @Environment(\.drawerButtonContext) private var buttonContext
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("What's your name?")
@@ -222,6 +223,16 @@ struct NameInputView: View {
         }
         .padding()
         .padding(.bottom, 20)
+        .onChange(of: name, initial: true) { oldValue, newValue in
+            if newValue.isEmpty {
+                buttonContext?.isPrimaryButtonEnabled = false
+            } else {
+                buttonContext?.isPrimaryButtonEnabled = true
+            }
+        }
+        .onDisappear {
+            buttonContext?.isPrimaryButtonEnabled = true
+        }
     }
 }
 
@@ -384,7 +395,6 @@ struct ShowCardView: View {
             }
         }
         .padding(.top, 20)
-//        .frame(maxHeight: UIScreen.main.bounds.height - 200)
     }
     
     func castMember(name: String, role: String) -> some View {

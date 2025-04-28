@@ -29,6 +29,8 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
     
     let content: Content
     
+    @Environment(\.drawerButtonContext) private var buttonContext
+    
     @State private var keyboardHeight: CGFloat = 0
     @State private var hideLeftButton = false
         
@@ -158,10 +160,16 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
                             if !hideLeftButton {
                                 DrawerButton(config: left, hideLeftButton: .constant(false))
                                     .transition(.move(edge: .leading).combined(with: .opacity))
+                                    .disabled(!(buttonContext?.isSecondaryButtonEnabled ?? true))
+//                                    .grayscale(!(buttonContext?.isSecondaryButtonEnabled ?? true) ? 0.0 : 1.0)
+//                                    .opacity(!(buttonContext?.isSecondaryButtonEnabled ?? true) ? 0.7 : 1.0)
                             }
                         }
                         if let right = rightButton {
                             DrawerButton(config: right, hideLeftButton: $hideLeftButton)
+                                .disabled(!(buttonContext?.isPrimaryButtonEnabled ?? true))
+//                                .grayscale(!(buttonContext?.isPrimaryButtonEnabled ?? true) ? 1.0 : 0.0)
+//                                .opacity(!(buttonContext?.isPrimaryButtonEnabled ?? true) ? 0.7 : 1.0)
                         }
                     }
                     .padding(.horizontal)

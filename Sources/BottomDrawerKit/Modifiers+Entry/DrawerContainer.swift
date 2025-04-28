@@ -9,6 +9,7 @@ import SwiftUI
 
 internal struct InternalDrawerContainer: ViewModifier {
     let style: BottomDrawerStyle
+    @Environment(\.drawerButtonContext) private var buttonContext
 
     func body(content: Content) -> some View {
         let router = BottomDrawerRouter.shared
@@ -29,6 +30,7 @@ internal struct InternalDrawerContainer: ViewModifier {
             return AnyView(
                 content
                     .environment(\.bottomDrawerRouter, router)
+                    .environment(\.drawerButtonContext, buttonContext)
                     .modifier(BottomDrawer(
                         initialHeight: resolvedInitialHeight,
                         maxHeight: resolvedMaxHeight,
@@ -46,6 +48,7 @@ internal struct InternalDrawerContainer: ViewModifier {
             return AnyView(
                 content
                     .environment(\.bottomDrawerRouter, router)
+                    .environment(\.drawerButtonContext, buttonContext)
                     .modifier(BottomCard(
                         initialHeight: resolvedInitialHeight,
                         maxHeight: resolvedMaxHeight,

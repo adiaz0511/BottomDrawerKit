@@ -328,6 +328,49 @@ protocol RetryableError: Error {
 
 ---
 
+## 🧠 Advanced: Dynamically Enable/Disable Buttons
+
+BottomDrawerKit allows you to **dynamically control** the enabled/disabled state of the primary and secondary buttons from anywhere inside your presented view.
+
+To enable this feature, you must inject a `DrawerButtonContext` into your environment.
+
+Example in your `App` entry point:
+
+```swift
+@main
+struct BottomDrawerKitExampleApp: App {
+    let buttonContext: DrawerButtonContext = .init()
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView(style: $style)
+                .bottomDrawer(style: style)
+                .environment(\.bottomDrawerRouter, BottomDrawerRouter.shared)
+                .environment(\.drawerButtonContext, buttonContext)
+        }
+    }
+}
+```
+
+Inside any view presented by the drawer or card, you can then access the context:
+
+```swift
+@Environment(\.drawerButtonContext) private var buttonContext
+```
+
+And dynamically enable or disable either button:
+
+```swift
+buttonContext?.isPrimaryButtonEnabled = false
+buttonContext?.isSecondaryButtonEnabled = true
+```
+
+✅ If no DrawerButtonContext is provided, buttons will behave normally and stay enabled by default.
+
+✅ This is optional and only needed if you want runtime control over the buttons’ enabled states.
+
+---
+
 ### 🎨 Visual Style (for `.card` only)
 
 | Property                 | Description                                                                 |

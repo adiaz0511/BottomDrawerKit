@@ -21,6 +21,9 @@ internal struct DrawerButton: View {
     @State private var dynamicTitle: String? = nil
     @State private var retryCount: Int = 0
     @State private var isInRetryMode: Bool = false
+    
+    @Environment(\.drawerButtonContext) private var buttonContext
+    @Environment(\.isEnabled) private var isEnabled
 
     private enum DrawerButtonState {
         case idle
@@ -31,14 +34,7 @@ internal struct DrawerButton: View {
 
     var body: some View {
         Button(action: {
-            config.hapticFeedback?.generate()
-            if let asyncAction = config.asyncConfig?.asyncAction {
-                Task {
-                    await performAsyncAction(asyncAction)
-                }
-            } else if let action = config.action {
-                action()
-            }
+            handleTap()
         }) {
             Color.clear
                 .frame(height: 54)
@@ -96,6 +92,32 @@ internal struct DrawerButton: View {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 isTransitioning = false
+            }
+        }
+        .opacity(isEnabled ? 1.0 : 0.7)
+    }
+    
+    @MainActor
+    private func handleTap() {
+        config.hapticFeedback?.generate()
+
+        var didResignFirstResponder = false
+
+        // Try to dismiss the keyboard if active
+        if UIResponder.keyboardIsVisible {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            didResignFirstResponder = true
+        }
+
+        let delay: DispatchTimeInterval = didResignFirstResponder ? .milliseconds(350) : .milliseconds(0)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            if let asyncAction = config.asyncConfig?.asyncAction {
+                Task {
+                    await performAsyncAction(asyncAction)
+                }
+            } else if let action = config.action {
+                action()
             }
         }
     }

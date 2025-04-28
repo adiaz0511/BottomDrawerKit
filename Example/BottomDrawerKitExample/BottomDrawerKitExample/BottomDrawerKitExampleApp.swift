@@ -11,12 +11,14 @@ import BottomDrawerKit
 @main
 struct BottomDrawerKitExampleApp: App {
     @State var style = BottomDrawerStyle.drawer
-
+    let buttonContext: DrawerButtonContext = .init()
+    
     var body: some Scene {
         WindowGroup {
             ContentView(style: $style)
                 .bottomDrawer(style: style)
                 .environment(\.bottomDrawerRouter, BottomDrawerRouter.shared)
+                .environment(\.drawerButtonContext, buttonContext)
                 .environment(\.drawerStyle, DrawerStyle(cornerRadius: .device, padding: 8))
         }
     }
