@@ -74,6 +74,7 @@ internal struct DrawerButton: View {
                         .stroke(borderColor(for: buttonState), lineWidth: 2)
                 )
         }
+        .disabled(buttonState != .idle)
         .onChange(of: config.title) { _, _ in
             if previousConfig == nil {
                 previousConfig = config
