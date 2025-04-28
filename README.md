@@ -437,6 +437,11 @@ In previews, inject the router manually:
 
 ---
 
+## Support
+If you like this project, please consider giving it a ⭐️
+
+
+
 ## License
 
 BottomDrawerKit is licensed under the [Apache License 2.0](LICENSE).
