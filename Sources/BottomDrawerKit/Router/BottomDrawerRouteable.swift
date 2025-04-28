@@ -18,8 +18,8 @@ public struct Config {
     public var height: DrawerHeight
     public var initialHeight: DrawerHeight
     public var maxHeight: DrawerHeight
-    public var leftButton: DrawerButtonConfig? = nil
-    public var rightButton: DrawerButtonConfig? = nil
+    public var primaryButton: DrawerButtonConfig? = nil
+    public var secondaryButton: DrawerButtonConfig? = nil
     public var visualStyle: VisualStyle? = nil
     public var onDismiss: (() -> Void)? = nil
     public var onDismissAsync: (() async -> Void)? = nil
@@ -30,8 +30,8 @@ public struct Config {
         height: DrawerHeight,
         initialHeight: DrawerHeight = .fraction(0.2),
         maxHeight: DrawerHeight = .fraction(1.0),
-        leftButton: DrawerButtonConfig? = nil,
-        rightButton: DrawerButtonConfig? = nil,
+        primaryButton: DrawerButtonConfig? = nil,
+        secondaryButton: DrawerButtonConfig? = nil,
         visualStyle: VisualStyle? = nil,
         onDismiss: (() -> Void)? = nil,
         onDismissAsync: (() async -> Void)? = nil
@@ -41,8 +41,8 @@ public struct Config {
         self.height = height
         self.initialHeight = initialHeight
         self.maxHeight = maxHeight
-        self.leftButton = leftButton
-        self.rightButton = rightButton
+        self.primaryButton = primaryButton
+        self.secondaryButton = secondaryButton
         self.visualStyle = visualStyle
         self.onDismiss = onDismiss
         self.onDismissAsync = onDismissAsync

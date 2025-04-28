@@ -232,15 +232,7 @@ Config(
     height: .points(420),
     initialHeight: .fraction(0.4),
     maxHeight: .fraction(0.9),
-    leftButton: DrawerButtonConfig(
-        title: "Cancel",
-        backgroundColor: .clear,
-        borderColor: .primary,
-        shape: .capsule,
-        hapticFeedback: .light,
-        action: { print("Cancelled!") }
-    ),
-    rightButton: DrawerButtonConfig(
+        primaryButton: DrawerButtonConfig(
         title: "Save",
         icon: "checkmark",
         backgroundColor: .blue,
@@ -248,6 +240,14 @@ Config(
         shape: .capsule,
         hapticFeedback: .light,
         action: { print("Saved!") }
+    ),
+    secondaryButton: DrawerButtonConfig(
+        title: "Cancel",
+        backgroundColor: .clear,
+        borderColor: .primary,
+        shape: .capsule,
+        hapticFeedback: .light,
+        action: { print("Cancelled!") }
     ),
     visualStyle: VisualStyle(
         background: AnyShapeStyle(Color.black),
@@ -277,11 +277,6 @@ Config(
 
 ### 🔘 Buttons
 
-| Property     | Description                                                                |
-|--------------|----------------------------------------------------------------------------|
-| `leftButton` | Secondary action button (e.g., "Cancel"). Appears on the left.              |
-| `rightButton`| Primary action button (e.g., "Save"). Appears on the right and is emphasized.|
-
 Each button uses a `DrawerButtonConfig`:
 
 | Config Field       | Description                                                   |
@@ -292,7 +287,45 @@ Each button uses a `DrawerButtonConfig`:
 | `borderColor`      | Optional stroke color                                         |
 | `shape`            | Button shape (`.capsule` or `.rounded(cornerRadius)`)         |
 | `hapticFeedback`   | Optional haptic feedback triggered on tap (`.light`, `.medium`, `.heavy`) |
-| `action`           | Closure triggered when the button is tapped                  |
+| `action`           | Closure triggered when the button is tapped (sync action)     |
+| `asyncConfig`      | Configure an async action, loading indicators, retry behavior, and success/error states |
+
+If you want to perform **asynchronous actions**, use the `asyncConfig` property:
+
+| Async Config Field           | Description |
+|-------------------------------|-------------|
+| `asyncAction`                 | Async closure to perform when the button is tapped. Should return `Result<String?, Error>`. The `String?` is used to update the button title dynamically on success. |
+| `hidesLeftButtonOnTap`        | If `true`, the secondary button hides during async action for a cleaner loading experience. |
+| `errorAppearance`             | Optional appearance (`icon`, `backgroundColor`, etc.) to apply when the async action fails. |
+| `tryAgainAppearance`          | Optional appearance for the "Try Again" state after a failure. If omitted, a default retry appearance is used. |
+| `successAppearance`           | Optional appearance to apply when the async action succeeds. |
+| `actionAfterSuccess`          | What happens after success (`.noAction`, `.pop`, or `.dismiss`). |
+| `maxRetryCount`               | Maximum number of retry attempts allowed after failure. If exceeded, a fallback action will be triggered. |
+| `actionAfterMaxRetries`       | What happens after reaching `maxRetryCount` (`.noAction`, `.pop`, or `.dismiss`). |
+
+### 🎨 DrawerButtonStateAppearance
+
+When setting `successAppearance`, `errorAppearance`, or `tryAgainAppearance`, you can configure:
+
+| Field                          | Description |
+|---------------------------------|-------------|
+| `icon`                         | SF Symbol to display for that result state |
+| `backgroundColor`              | Background color of the button during that state |
+| `borderColor`                  | Optional border color for that state |
+| `title`                        | Optional title override for that state |
+| `hapticFeedbackOnCompletion`   | Optional haptic feedback to trigger when this state occurs (`.light`, `.medium`, `.heavy`, `.success`, `.warning`, `.error`) |
+
+✅ You can leave any field `nil` to fallback to default behaviors.
+
+**Special Note:**  
+If the `Error` thrown from the asyncAction conforms to `RetryableError`,  
+you can provide a custom `retryTitle` to dynamically update the "Try Again" button text based on the failure.
+
+```swift
+protocol RetryableError: Error {
+    var retryTitle: String? { get }
+}
+```
 
 ### 🎨 Visual Style (for `.card` only)
 

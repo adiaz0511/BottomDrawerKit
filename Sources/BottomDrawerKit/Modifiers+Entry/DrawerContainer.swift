@@ -37,8 +37,8 @@ internal struct InternalDrawerContainer: ViewModifier {
                         height: router.heightBinding,
                         isPresented: router.isPresentedBinding,
                         interactiveDismiss: router.config.interactiveDismiss,
-                        leftButton: router.config.leftButton,
-                        rightButton: router.config.rightButton,
+                        leftButton: router.config.secondaryButton,
+                        rightButton: router.config.primaryButton,
                         drawerStyle: router.config.visualStyle
                     ))
             )
@@ -54,8 +54,8 @@ internal struct InternalDrawerContainer: ViewModifier {
                         height: router.heightBinding,
                         isPresented: router.isPresentedBinding,
                         interactiveDismiss: router.config.interactiveDismiss,
-                        leftButton: router.config.leftButton,
-                        rightButton: router.config.rightButton,
+                        leftButton: router.config.secondaryButton,
+                        rightButton: router.config.primaryButton,
                         cardStyle: router.config.visualStyle
                     ))
             )

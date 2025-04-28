@@ -30,6 +30,7 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
     let content: Content
     
     @State private var keyboardHeight: CGFloat = 0
+    @State private var hideLeftButton = false
         
     // MARK: Drag gesture configuration
     var dragGesture: some Gesture {
@@ -153,11 +154,13 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
                 if leftButton != nil || rightButton != nil {
                     HStack(spacing: 12) {
                         if let left = leftButton {
-                            DrawerButton(config: left)
-                                .transition(.move(edge: .leading).combined(with: .opacity))
+                            if !hideLeftButton {
+                                DrawerButton(config: left, hideLeftButton: .constant(false))
+                                    .transition(.move(edge: .leading).combined(with: .opacity))
+                            }
                         }
                         if let right = rightButton {
-                            DrawerButton(config: right)
+                            DrawerButton(config: right, hideLeftButton: $hideLeftButton)
                         }
                     }
                     .padding(.horizontal)
