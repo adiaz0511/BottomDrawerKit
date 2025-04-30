@@ -541,9 +541,10 @@ BottomDrawerRouter.onRouteChange = { change, stack in
 }
 ```
 
----
 
 This is useful for debugging transitions, analytics, or syncing state with your app.
+
+---
 
 ## 🔗 Coordinating with NavigationStack
 
