@@ -434,6 +434,15 @@ Globally configure corner radius and padding via `DrawerStyle`:
 ))
 ```
 
+Or use the dedicated view modifier:
+
+```swift
+.bottomDrawerStyle(DrawerStyle(
+    cornerRadius: .device,
+    padding: 16
+))
+```
+
 ---
 
 ### 🔹 VisualStyle (local, per-route)

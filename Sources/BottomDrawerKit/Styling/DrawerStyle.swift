@@ -44,3 +44,9 @@ public extension EnvironmentValues {
         set { self[DrawerStyleKey.self] = newValue }
     }
 }
+
+public extension View {
+    func bottomDrawerStyle(_ style: DrawerStyle) -> some View {
+        environment(\.drawerStyle, style)
+    }
+}

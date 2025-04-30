@@ -19,7 +19,7 @@ struct BottomDrawerKitExampleApp: App {
                 .bottomDrawer(style: style)
                 .environment(\.bottomDrawerRouter, BottomDrawerRouter.shared)
                 .environment(\.drawerButtonContext, buttonContext)
-                .environment(\.drawerStyle, DrawerStyle(cornerRadius: .device, padding: 8))
+                .bottomDrawerStyle(.init(cornerRadius: .device, padding: 8))
         }
     }
 }
