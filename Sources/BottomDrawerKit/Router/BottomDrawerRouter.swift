@@ -76,7 +76,7 @@ public final class BottomDrawerRouter: @unchecked Sendable {
         if content == nil {
             self.content = AnyView(top.view())
         } else {
-            withAnimation(.easeInOut(duration: 0.15)) {
+            withAnimation(.smooth(duration: 0.3, extraBounce: 0.3)) {
                 self.content = AnyView(top.view())
             }
         }
