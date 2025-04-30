@@ -40,10 +40,16 @@ public final class BottomDrawerRouter: @unchecked Sendable {
         loggingEnabled = enabled
     }
     
-    private var onRouteChange: (([any BottomDrawerRouteable]) -> Void)?
+    public enum RouteChange {
+        case present(route: any BottomDrawerRouteable)
+        case pop(previous: any BottomDrawerRouteable, newTop: (any BottomDrawerRouteable)?)
+        case popToRoot
+        case dismiss
+    }
 
-    // Static property to allow access to onRouteChange without referencing .shared
-    public static var onRouteChange: (([any BottomDrawerRouteable]) -> Void)? {
+    private var onRouteChange: ((RouteChange, [any BottomDrawerRouteable]) -> Void)?
+
+    public static var onRouteChange: ((RouteChange, [any BottomDrawerRouteable]) -> Void)? {
         get { BottomDrawerRouter.shared.onRouteChange }
         set { BottomDrawerRouter.shared.onRouteChange = newValue }
     }
@@ -56,7 +62,7 @@ public final class BottomDrawerRouter: @unchecked Sendable {
         if BottomDrawerRouter.loggingEnabled {
             print("[BottomDrawerRouter] Stack after present: \(stack)")
         }
-        onRouteChange?(stack)
+        onRouteChange?(.present(route: route), stack)
         applyTopRoute()
     }
     
@@ -111,11 +117,13 @@ public final class BottomDrawerRouter: @unchecked Sendable {
                 return
             }
  
+            let previous = self.stack.last!
             self.stack.removeLast()
             if BottomDrawerRouter.loggingEnabled {
                 print("[BottomDrawerRouter] Stack after pop: \(self.stack)")
             }
-            self.onRouteChange?(self.stack)
+            let newTop = self.stack.last
+            self.onRouteChange?(.pop(previous: previous, newTop: newTop), self.stack)
             self.applyTopRoute()
         }
     }
@@ -130,7 +138,7 @@ public final class BottomDrawerRouter: @unchecked Sendable {
         if BottomDrawerRouter.loggingEnabled {
             print("[BottomDrawerRouter] Stack after popToRoot: \(stack)")
         }
-        onRouteChange?(stack)
+        onRouteChange?(.popToRoot, stack)
         applyTopRoute()
     }
 
@@ -154,7 +162,7 @@ public final class BottomDrawerRouter: @unchecked Sendable {
                 if BottomDrawerRouter.loggingEnabled {
                     print("[BottomDrawerRouter] Stack after dismiss: \(self.stack)")
                 }
-                onRouteChange?(stack)
+                onRouteChange?(.dismiss, stack)
             }
         }
     }

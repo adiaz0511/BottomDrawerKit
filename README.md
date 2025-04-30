@@ -501,17 +501,26 @@ By default, logging is enabled in `DEBUG` builds and disabled in release builds.
 
 ### 2. Route Change Hook
 
-You can observe route changes by setting a global hook:
+You can observe route changes by setting a global hook. This gives you access to both the type of change and the updated stack:
 
 ```swift
-BottomDrawerRouter.onRouteChange = { stack in
-    if let top = stack.last {
-        print("📦 Route changed! Top route: \(top)")
-    } else {
-        print("📦 Drawer stack is now empty.")
+BottomDrawerRouter.onRouteChange = { change, stack in
+    switch change {
+    case .present(let route):
+        print("🟢 Presented route: \(route)")
+    case .pop(let previous, let newTop):
+        print("🔵 Popped route: \(previous)")
+        if let newTop = newTop {
+            print("🔝 New top route: \(newTop)")
+        } else {
+            print("🔝 Stack is now empty")
+        }
+    case .popToRoot:
+        print("🔙 Popped to root")
+    case .dismiss:
+        print("❌ Dismissed all routes")
     }
 }
-```
 
 This is useful for debugging transitions, analytics, or syncing state with your app.
 

@@ -22,12 +22,22 @@ struct BottomDrawerKitExampleApp: App {
                 .bottomDrawerStyle(.init(cornerRadius: .device, padding: 8))
                 .onAppear {
                     BottomDrawerRouter.setLogging(false)
-                    
-                    BottomDrawerRouter.onRouteChange = { stack in
-                        if let top = stack.last {
-                            print("📦 Route changed! Top route: \(top)")
-                        } else {
-                            print("📦 Drawer stack is now empty.")
+
+                    BottomDrawerRouter.onRouteChange = { change, stack in
+                        switch change {
+                        case .present(let route):
+                            print("🟢 Presented route: \(route)")
+                        case .pop(let previous, let newTop):
+                            print("🔵 Popped route: \(previous)")
+                            if let newTop = newTop {
+                                print("🔝 New top route: \(newTop)")
+                            } else {
+                                print("🔝 Stack is now empty")
+                            }
+                        case .popToRoot:
+                            print("🔙 Popped to root")
+                        case .dismiss:
+                            print("❌ Dismissed all routes")
                         }
                     }
                 }
