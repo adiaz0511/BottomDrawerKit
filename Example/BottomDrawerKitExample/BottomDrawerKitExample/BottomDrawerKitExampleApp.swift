@@ -20,6 +20,17 @@ struct BottomDrawerKitExampleApp: App {
                 .bottomDrawerRouter(BottomDrawerRouter.shared)
                 .drawerButtonContext(buttonContext)
                 .bottomDrawerStyle(.init(cornerRadius: .device, padding: 8))
+                .onAppear {
+                    BottomDrawerRouter.setLogging(false)
+                    
+                    BottomDrawerRouter.onRouteChange = { stack in
+                        if let top = stack.last {
+                            print("📦 Route changed! Top route: \(top)")
+                        } else {
+                            print("📦 Drawer stack is now empty.")
+                        }
+                    }
+                }
         }
     }
 }

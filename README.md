@@ -485,6 +485,38 @@ If you’re using `.card`, you still need to provide height values, but they won
 
 ---
 
+## 🐞 Debugging
+
+To help track what's happening inside the drawer, BottomDrawerKit provides two optional debugging tools:
+
+### 1. Logging
+
+You can enable or disable internal log messages printed by the router:
+
+```swift
+BottomDrawerRouter.setLogging(true) // or false
+```
+
+By default, logging is enabled in `DEBUG` builds and disabled in release builds.
+
+### 2. Route Change Hook
+
+You can observe route changes by setting a global hook:
+
+```swift
+BottomDrawerRouter.onRouteChange = { stack in
+    if let top = stack.last {
+        print("📦 Route changed! Top route: \(top)")
+    } else {
+        print("📦 Drawer stack is now empty.")
+    }
+}
+```
+
+This is useful for debugging transitions, analytics, or syncing state with your app.
+
+---
+
 ## 🧪 Testing / Previewing
 
 In previews, inject the router manually:

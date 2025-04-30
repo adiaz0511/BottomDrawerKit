@@ -28,23 +28,49 @@ public final class BottomDrawerRouter: @unchecked Sendable {
     private var onDismissCallback: (() -> Void)?
     private var onDismissAsyncCallback: (() async -> Void)?
     
+    nonisolated(unsafe) private(set) static var loggingEnabled: Bool = {
+        #if DEBUG
+        true
+        #else
+        false
+        #endif
+    }()
     
+    public static func setLogging(_ enabled: Bool) {
+        loggingEnabled = enabled
+    }
+    
+    private var onRouteChange: (([any BottomDrawerRouteable]) -> Void)?
+
+    // Static property to allow access to onRouteChange without referencing .shared
+    public static var onRouteChange: (([any BottomDrawerRouteable]) -> Void)? {
+        get { BottomDrawerRouter.shared.onRouteChange }
+        set { BottomDrawerRouter.shared.onRouteChange = newValue }
+    }
+
     @MainActor func present(_ route: any BottomDrawerRouteable) {
-        print("[BottomDrawerRouter] Presenting route: \(route)")
+        if BottomDrawerRouter.loggingEnabled {
+            print("[BottomDrawerRouter] Presenting route: \(route)")
+        }
         stack.append(route)
-        print("[BottomDrawerRouter] Stack after present: \(stack)")
+        if BottomDrawerRouter.loggingEnabled {
+            print("[BottomDrawerRouter] Stack after present: \(stack)")
+        }
+        onRouteChange?(stack)
         applyTopRoute()
     }
     
     @MainActor private func applyTopRoute() {
         let screenHeight = UIScreen.main.bounds.height
         let top = stack.last!
-        print("[BottomDrawerRouter] Applying top route: \(String(describing: stack.last))")
+        if BottomDrawerRouter.loggingEnabled {
+            print("[BottomDrawerRouter] Applying top route: \(String(describing: stack.last))")
+        }
         
         if content == nil {
             self.content = AnyView(top.view())
         } else {
-            withAnimation(.easeInOut(duration: 0.25)) {
+            withAnimation(.easeInOut(duration: 0.15)) {
                 self.content = AnyView(top.view())
             }
         }
@@ -63,7 +89,9 @@ public final class BottomDrawerRouter: @unchecked Sendable {
     }
     
     @MainActor func pop() {
-        print("[BottomDrawerRouter] Popping route. Stack count before: \(stack.count)")
+        if BottomDrawerRouter.loggingEnabled {
+            print("[BottomDrawerRouter] Popping route. Stack count before: \(stack.count)")
+        }
  
         var didResignFirstResponder = false
  
@@ -77,27 +105,39 @@ public final class BottomDrawerRouter: @unchecked Sendable {
  
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             guard self.stack.count > 1 else {
-                print("[BottomDrawerRouter] Only one route in stack. Pop ignored.")
+                if BottomDrawerRouter.loggingEnabled {
+                    print("[BottomDrawerRouter] Only one route in stack. Pop ignored.")
+                }
                 return
             }
  
             self.stack.removeLast()
-            print("[BottomDrawerRouter] Stack after pop: \(self.stack)")
+            if BottomDrawerRouter.loggingEnabled {
+                print("[BottomDrawerRouter] Stack after pop: \(self.stack)")
+            }
+            self.onRouteChange?(self.stack)
             self.applyTopRoute()
         }
     }
 
     @MainActor func popToRoot() {
-        print("[BottomDrawerRouter] Popping to root. Stack count before: \(stack.count)")
+        if BottomDrawerRouter.loggingEnabled {
+            print("[BottomDrawerRouter] Popping to root. Stack count before: \(stack.count)")
+        }
         guard !stack.isEmpty else { return }
 
         stack = [stack.first!]
-        print("[BottomDrawerRouter] Stack after popToRoot: \(stack)")
+        if BottomDrawerRouter.loggingEnabled {
+            print("[BottomDrawerRouter] Stack after popToRoot: \(stack)")
+        }
+        onRouteChange?(stack)
         applyTopRoute()
     }
 
     func dismiss() {
-        print("[BottomDrawerRouter] Dismissing drawer. Stack will be cleared.")
+        if BottomDrawerRouter.loggingEnabled {
+            print("[BottomDrawerRouter] Dismissing drawer. Stack will be cleared.")
+        }
         withAnimation {
             self.isPresented = false
 
@@ -111,7 +151,10 @@ public final class BottomDrawerRouter: @unchecked Sendable {
                 }
 
                 self.stack.removeAll()
-                print("[BottomDrawerRouter] Stack after dismiss: \(self.stack)")
+                if BottomDrawerRouter.loggingEnabled {
+                    print("[BottomDrawerRouter] Stack after dismiss: \(self.stack)")
+                }
+                onRouteChange?(stack)
             }
         }
     }
