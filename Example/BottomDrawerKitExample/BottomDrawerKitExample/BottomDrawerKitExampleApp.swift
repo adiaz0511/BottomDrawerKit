@@ -17,7 +17,7 @@ struct BottomDrawerKitExampleApp: App {
         WindowGroup {
             ContentView(style: $style)
                 .bottomDrawer(style: style)
-                .bottomDrawerRouter(BottomDrawerRouter.shared)
+                .injectBottomDrawerRouter()
                 .drawerButtonContext(buttonContext)
                 .bottomDrawerStyle(.init(cornerRadius: .device, padding: 8))
                 .onAppear {

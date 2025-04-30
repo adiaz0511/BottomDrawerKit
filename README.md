@@ -76,13 +76,13 @@ struct MyApp: App {
         WindowGroup {
             ContentView()
                 .bottomDrawer(style: .drawer) // or .card
-                .bottomDrawerRouter(BottomDrawerRouter.shared)
+                .injectBottomDrawerRouter()
         }
     }
 }
 ```
 
-> You can inject the router using .bottomDrawerRouter(...) or, alternatively, with .environment(\.bottomDrawerRouter, ...).
+> You can inject the router using .injectBottomDrawerRouter() or, alternatively, with .environment(\.bottomDrawerRouter, ...).
 
 
 ---
