@@ -523,7 +523,15 @@ BottomDrawerRouter.onRouteChange = { change, stack in
 }
 ```
 
+---
+
 This is useful for debugging transitions, analytics, or syncing state with your app.
+
+## 🔗 Coordinating with NavigationStack
+
+Want to pop your app's NavigationStack from inside a drawer?
+
+See: [NavigationStack Integration →](./NavigationStackIntegration.md)
 
 ---
 
