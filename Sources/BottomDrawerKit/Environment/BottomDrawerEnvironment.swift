@@ -17,3 +17,10 @@ extension EnvironmentValues {
         set { self[BottomDrawerRouterKey.self] = newValue }
     }
 }
+
+
+public extension View {
+    func bottomDrawerRouter(_ router: BottomDrawerRouter) -> some View {
+        environment(\.bottomDrawerRouter, router)
+    }
+}

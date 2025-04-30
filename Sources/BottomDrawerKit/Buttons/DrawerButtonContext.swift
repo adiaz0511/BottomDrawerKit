@@ -32,3 +32,9 @@ public extension EnvironmentValues {
         set { self[DrawerButtonContextKey.self] = newValue }
     }
 }
+
+public extension View {
+    func drawerButtonContext(_ context: DrawerButtonContext) -> some View {
+        environment(\.drawerButtonContext, context)
+    }
+}

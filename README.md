@@ -65,7 +65,7 @@ To try it out:
 
 ## ✅ 1. Add `.bottomDrawer()` to your root view
 
-Apply the `bottomDrawer(style:)` modifier to your top-level view (usually in your `App` entry point):
+Apply the bottomDrawer(style:) modifier to your top-level view (usually in your App entry point):
 
 ```swift
 import BottomDrawerKit
@@ -75,12 +75,15 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.bottomDrawerRouter, BottomDrawerRouter.shared)
                 .bottomDrawer(style: .drawer) // or .card
+                .bottomDrawerRouter(BottomDrawerRouter.shared)
         }
     }
 }
 ```
+
+> You can inject the router using .bottomDrawerRouter(...) or, alternatively, with .environment(\.bottomDrawerRouter, ...).
+
 
 ---
 
@@ -351,6 +354,13 @@ struct BottomDrawerKitExampleApp: App {
     }
 }
 ```
+
+Or use the following view modifier for cleaner injection:
+
+```swift
+.drawerButtonContext(buttonContext)
+```
+
 
 Inside any view presented by the drawer or card, you can then access the context:
 

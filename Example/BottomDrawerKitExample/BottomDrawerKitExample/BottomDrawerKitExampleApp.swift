@@ -17,8 +17,8 @@ struct BottomDrawerKitExampleApp: App {
         WindowGroup {
             ContentView(style: $style)
                 .bottomDrawer(style: style)
-                .environment(\.bottomDrawerRouter, BottomDrawerRouter.shared)
-                .environment(\.drawerButtonContext, buttonContext)
+                .bottomDrawerRouter(BottomDrawerRouter.shared)
+                .drawerButtonContext(buttonContext)
                 .bottomDrawerStyle(.init(cornerRadius: .device, padding: 8))
         }
     }
