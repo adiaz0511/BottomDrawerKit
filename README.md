@@ -35,19 +35,30 @@
 
 ## 📚 Table of Contents
 
+### 🚀 Getting Started
 - [Installation](#-installation)
 - [Example App](#-example-app)
+
+### 🧩 Core Usage
 - [1. Add .bottomDrawer() to your root view](#-1-add-bottomdrawer-to-your-root-view)
 - [2. Define your routes](#-2-define-your-routes)
 - [3. Present a route](#-3-present-a-route)
 - [4. Dismiss or navigate](#-4-dismiss-or-navigate)
 - [Dynamic routes (struct-based)](#-dynamic-routes-struct-based)
+
+### 🎛 Configuration
 - [Configuration Options](#-configuration-options)
 - [Advanced: Dynamically Enable/Disable Buttons](#-advanced-dynamically-enabledisable-buttons)
+
+### 🎨 Styling
 - [Styling](#-styling)
+
+### 🛠 Utilities
 - [Debugging](#-debugging)
 - [Coordinating with NavigationStack](#-coordinating-with-navigationstack)
 - [Testing / Previewing](#-testing--previewing)
+
+### 🤝 Project
 - [Contributing](#-contributing)
 - [Support](#support)
 - [License](#license)
