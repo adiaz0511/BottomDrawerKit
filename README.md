@@ -46,6 +46,7 @@
 - [Advanced: Dynamically Enable/Disable Buttons](#-advanced-dynamically-enabledisable-buttons)
 - [Styling](#-styling)
 - [Debugging](#-debugging)
+- [Coordinating with NavigationStack](#-coordinating-with-navigationstack)
 - [Testing / Previewing](#-testing--previewing)
 - [Contributing](#-contributing)
 - [Support](#support)
