@@ -33,6 +33,24 @@
 
 </div>
 
+## 📚 Table of Contents
+
+- [Installation](#-installation)
+- [Example App](#-example-app)
+- [1. Add .bottomDrawer() to your root view](#-1-add-bottomdrawer-to-your-root-view)
+- [2. Define your routes](#-2-define-your-routes)
+- [3. Present a route](#-3-present-a-route)
+- [4. Dismiss or navigate](#-4-dismiss-or-navigate)
+- [Dynamic routes (struct-based)](#-dynamic-routes-struct-based)
+- [Configuration Options](#-configuration-options)
+- [Advanced: Dynamically Enable/Disable Buttons](#-advanced-dynamically-enabledisable-buttons)
+- [Styling](#-styling)
+- [Debugging](#-debugging)
+- [Testing / Previewing](#-testing--previewing)
+- [Contributing](#-contributing)
+- [Support](#support)
+- [License](#license)
+
 ---
 
 ## 📦 Installation
