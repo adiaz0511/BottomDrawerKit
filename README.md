@@ -521,6 +521,7 @@ BottomDrawerRouter.onRouteChange = { change, stack in
         print("❌ Dismissed all routes")
     }
 }
+```
 
 This is useful for debugging transitions, analytics, or syncing state with your app.
 
