@@ -57,6 +57,13 @@ enum BottomDrawerDemoRoute: BottomDrawerRouteable, Identifiable {
                         }
                     }
                 ),
+                visualStyle: .init(
+                    drawerStyleOverride: .init(
+                        blurRadius: 10,
+                        overlayTint: .blue,
+                        overlayTintOpacity: 0.2
+                    )
+                ),
                 onDismissAsync: {
                     try? await Task.sleep(nanoseconds: 400_000_000)
                     print("Async dismiss complete")

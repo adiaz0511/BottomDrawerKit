@@ -112,15 +112,29 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
             contentCornerRadius = UIScreen.main.displayCornerRadius
         }
     }
+    
+    private var overlayColor: Color {
+        let t = max(min(height / maxHeight, 1), 0)
+        let tint = cardStyle?.drawerStyleOverride?.overlayTint ?? style.overlayTint ?? .black
+        let ratio = cardStyle?.drawerStyleOverride?.overlayTintOpacity ?? style.overlayTintOpacity ?? 0.1
+        return tint.opacity(t * ratio)
+    }
+    
+    private var overlayBlurRadius: CGFloat {
+        let t = max(min(height / maxHeight, 1), 0)
+        return (cardStyle?.drawerStyleOverride?.blurRadius ?? style.blurRadius ?? 0) * t
+    }
         
     var body: some View {
+        let t = max(min(height / maxHeight, 1), 0)
+
         ZStack {
             content
                 .ignoresSafeArea(.keyboard, edges: .bottom)
+                .blur(radius: isPresented ? overlayBlurRadius : 0)
 
             if isPresented {
-                let t = max(min(height / maxHeight, 1), 0)
-                Color.black.opacity(t * 0.1)
+                overlayColor
                     .ignoresSafeArea()
                     .transition(.opacity)
                     .animation(.easeInOut, value: isPresented)
@@ -159,15 +173,11 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
                                     DrawerButton(config: left, hideLeftButton: .constant(false))
                                         .transition(.move(edge: .leading).combined(with: .opacity))
                                         .disabled(!(buttonContext?.isSecondaryButtonEnabled ?? true))
-//                                        .grayscale(!(buttonContext?.isSecondaryButtonEnabled ?? true) ? 0.0 : 1.0)
-//                                        .opacity(!(buttonContext?.isSecondaryButtonEnabled ?? true) ? 0.7 : 1.0)
                                 }
                             }
                             if let right = rightButton {
                                 DrawerButton(config: right, hideLeftButton: $hideLeftButton)
                                     .disabled(!(buttonContext?.isPrimaryButtonEnabled ?? true))
-//                                    .grayscale(!(buttonContext?.isPrimaryButtonEnabled ?? true) ? 0.0 : 1.0)
-//                                    .opacity(!(buttonContext?.isPrimaryButtonEnabled ?? true) ? 0.7 : 1.0)
                             }
                         }
                         .padding(.horizontal, 30)
@@ -239,4 +249,3 @@ internal struct CardPresentationView<Content: View, ScrollContent: View>: View {
         initialHeight == UIScreen.main.bounds.height
     }
 }
-

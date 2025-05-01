@@ -19,7 +19,15 @@ struct BottomDrawerKitExampleApp: App {
                 .bottomDrawer(style: style)
                 .injectBottomDrawerRouter()
                 .drawerButtonContext(buttonContext)
-                .bottomDrawerStyle(.init(cornerRadius: .device, padding: 8))
+                .bottomDrawerStyle(
+                    .init(
+                        cornerRadius: .device,
+                        padding: 8,
+                        blurRadius: 0,
+                        overlayTint: .black,
+                        overlayTintOpacity: 0.1
+                    )
+                )
                 .onAppear {
                     BottomDrawerRouter.setLogging(false)
 

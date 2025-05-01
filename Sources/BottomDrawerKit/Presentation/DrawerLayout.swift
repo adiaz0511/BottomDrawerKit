@@ -30,7 +30,8 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
     let content: Content
     
     @Environment(\.drawerButtonContext) private var buttonContext
-    
+    @Environment(\.drawerStyle) private var style
+
     @State private var keyboardHeight: CGFloat = 0
     @State private var hideLeftButton = false
         
@@ -111,6 +112,18 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
             contentCornerRadius = isPresented ? UIScreen.main.displayCornerRadius : 0 // TODO: device radius would be cool here!
         }
     }
+    
+    private var overlayColor: Color {
+        let t = max(min(height / maxHeight, 1), 0)
+        let tint = drawerStyle?.drawerStyleOverride?.overlayTint ?? style.overlayTint ?? .black
+        let ratio = drawerStyle?.drawerStyleOverride?.overlayTintOpacity ?? style.overlayTintOpacity ?? 0.1
+        return tint.opacity(t * ratio)
+    }
+    
+    private var overlayBlurRadius: CGFloat {
+        let t = max(min(height / maxHeight, 1), 0)
+        return (drawerStyle?.drawerStyleOverride?.blurRadius ?? style.blurRadius ?? 0) * t
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -122,21 +135,30 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .disabled(isPresented)
                 .background(.background)
+                .blur(radius: isPresented ? overlayBlurRadius : 0)
                 .mask(
                     BottomRoundedRectangle(cornerRadius: contentCornerRadius)
                         .ignoresSafeArea()
                 )
                 .opacity(isPresented ? 0.95 : 1)
-                .onTapGesture {
-                    if UIResponder.keyboardIsVisible {
-                        dismissKeyboard()
-                    } else {
-                        if interactiveDismiss {
-                            BottomDrawerRouter.shared.dismiss()
-                        }
-                    }
-                }
                 .offset(y: isPresented ? -height : 0)
+                .overlay {
+                    BottomRoundedRectangle(cornerRadius: contentCornerRadius)
+                        .fill(overlayColor)
+                        .frame(maxHeight: .infinity, alignment: .top)
+                        .padding(.bottom, height + 33)
+                        .offset(y: isPresented ? 0 : height + 33)
+                        .ignoresSafeArea()
+                        .transition(.blurReplace)
+                        .animation(.easeInOut, value: isPresented)
+                        .onTapGesture {
+                            if UIResponder.keyboardIsVisible {
+                                dismissKeyboard()
+                            } else if interactiveDismiss {
+                                BottomDrawerRouter.shared.dismiss()
+                            }
+                        }
+                }
             
             VStack(spacing: 0) {
                 dragHandle
@@ -161,15 +183,11 @@ internal struct DrawerPresentationView<Content: View, ScrollContent: View>: View
                                 DrawerButton(config: left, hideLeftButton: .constant(false))
                                     .transition(.move(edge: .leading).combined(with: .opacity))
                                     .disabled(!(buttonContext?.isSecondaryButtonEnabled ?? true))
-//                                    .grayscale(!(buttonContext?.isSecondaryButtonEnabled ?? true) ? 0.0 : 1.0)
-//                                    .opacity(!(buttonContext?.isSecondaryButtonEnabled ?? true) ? 0.7 : 1.0)
                             }
                         }
                         if let right = rightButton {
                             DrawerButton(config: right, hideLeftButton: $hideLeftButton)
                                 .disabled(!(buttonContext?.isPrimaryButtonEnabled ?? true))
-//                                .grayscale(!(buttonContext?.isPrimaryButtonEnabled ?? true) ? 1.0 : 0.0)
-//                                .opacity(!(buttonContext?.isPrimaryButtonEnabled ?? true) ? 0.7 : 1.0)
                         }
                     }
                     .padding(.horizontal)

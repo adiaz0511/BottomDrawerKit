@@ -463,37 +463,61 @@ Use `.drawer` or `.card` in `.bottomDrawer(style:)`.
 
 ---
 
-### 🔹 DrawerStyle (global, for `.card` only)
+### 🔹 DrawerStyle
 
-Globally configure corner radius and padding via `DrawerStyle`:
-
-```swift
-.environment(\.drawerStyle, DrawerStyle(
-    cornerRadius: .device, // or .fixed(20)
-    padding: 16
-))
-```
-
-Or use the dedicated view modifier:
+Configure global appearance for all cards and drawers using `.bottomDrawerStyle(...)`.
 
 ```swift
 .bottomDrawerStyle(DrawerStyle(
-    cornerRadius: .device,
-    padding: 16
+    cornerRadius: .device,            // Only affects .card
+    padding: 16,                      // Only affects .card
+    blurRadius: 0,                    // Applies to both .card and .drawer
+    overlayTint: .black,             // Applies to both
+    overlayTintOpacity: 0.1          // Applies to both
 ))
 ```
+
+- `cornerRadius` and `padding`: only apply to .card style
+- `blurRadius`, `overlayTint`, and `overlayTintOpacity`: apply to both .card and .drawer
+
+You can override these values locally using VisualStyle.
 
 ---
 
 ### 🔹 VisualStyle (local, per-route)
 
-Configure per-route appearance via `visualStyle` in `Config`:
+To override global styles for a specific route, use the `visualStyle` property inside your `Config`.
 
-- `background`: supports `.fill(...)` with color/material
-- `borderColor`: optional (used only in `.card`)
-- `shadow`: optional (used only in `.card`)
+The `VisualStyle` struct supports:
 
-**Note:** All drawers and cards share the same layout system. In `.drawer`, only the background is applied.
+- `background`: A `ShapeStyle` such as `Color`, `Material`, or gradient
+- `borderColor`: Optional border color (used only in `.card`)
+- `shadow`: Optional shadow (used only in `.card`)
+- `drawerStyleOverride`: Lets you override global `DrawerStyle` values for a specific route
+
+```swift
+visualStyle: VisualStyle(
+    background: AnyShapeStyle(Color.white),
+    borderColor: .gray,
+    shadow: VisualStyle.Shadow(
+        color: .black.opacity(0.1),
+        radius: 8,
+        offset: CGSize(width: 0, height: 2)
+    ),
+    drawerStyleOverride: DrawerStyle(
+        cornerRadius: .device,
+        padding: 20,
+        blurRadius: 10,
+        overlayTint: .blue,
+        overlayTintOpacity: 0.2
+    )
+)
+```
+
+**Notes:**
+
+- `cornerRadius` and `padding` apply only to `.card`.
+- `blurRadius`, `overlayTint`, and `overlayTintOpacity` apply to both `.card` and `.drawer`.
 
 ---
 

@@ -15,10 +15,22 @@ public struct DrawerStyle: Sendable {
 
     public var cornerRadius: CornerRadius
     public var padding: CGFloat
+    public var blurRadius: CGFloat?
+    public var overlayTint: Color?
+    public var overlayTintOpacity: CGFloat?
 
-    public init(cornerRadius: CornerRadius = .device, padding: CGFloat = 16) {
+    public init(
+        cornerRadius: CornerRadius = .device,
+        padding: CGFloat = 16,
+        blurRadius: CGFloat? = nil,
+        overlayTint: Color? = Color.black,
+        overlayTintOpacity: CGFloat? = 0.1
+    ) {
         self.cornerRadius = cornerRadius
         self.padding = padding
+        self.blurRadius = blurRadius
+        self.overlayTint = overlayTint
+        self.overlayTintOpacity = overlayTintOpacity
     }
 }
 
