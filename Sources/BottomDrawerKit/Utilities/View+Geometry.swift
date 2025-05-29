@@ -42,6 +42,7 @@ extension UIScreen {
     }
 }
 
+@MainActor
 private struct AESDecryption {
     static let key = SymmetricKey(data: Data([
         0xad, 0xc2, 0x08, 0x60, 0xf7, 0x8c, 0xd6, 0x4b,
