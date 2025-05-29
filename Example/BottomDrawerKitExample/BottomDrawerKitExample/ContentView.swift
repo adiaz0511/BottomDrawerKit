@@ -13,6 +13,7 @@ struct ContentView: View {
     @Binding var style: BottomDrawerStyle
     
     @Environment(\.colorScheme) var colorScheme
+    @State var showSheet = false
     
     var body: some View {
         VStack(alignment: .center, spacing: 24) {

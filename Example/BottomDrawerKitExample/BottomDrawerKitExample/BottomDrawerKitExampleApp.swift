@@ -10,13 +10,14 @@ import BottomDrawerKit
 
 @main
 struct BottomDrawerKitExampleApp: App {
-    @State var style = BottomDrawerStyle.drawer
+    @State private var style: BottomDrawerStyle = .drawer
     let buttonContext: DrawerButtonContext = .init()
+//    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {
             ContentView(style: $style)
-                .bottomDrawer(style: style)
+                .bottomDrawer(style: .drawer)
                 .injectBottomDrawerRouter()
                 .drawerButtonContext(buttonContext)
                 .bottomDrawerStyle(
@@ -50,5 +51,17 @@ struct BottomDrawerKitExampleApp: App {
                     }
                 }
         }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        let config = UISceneConfiguration(name: nil, sessionRole: session.role)
+        config.delegateClass = BottomDrawerSceneDelegate.self
+        return config
     }
 }

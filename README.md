@@ -40,7 +40,7 @@
 - [Example App](#-example-app)
 
 ### 🧩 Core Usage
-- [1. Add .bottomDrawer() to your root view](#-1-add-bottomdrawer-to-your-root-view)
+- [1. Choose Your Integration: Modifier or SceneDelegate](#-1-choose-your-integration-modifier-or-scenedelegate)
 - [2. Define your routes](#-2-define-your-routes)
 - [3. Present a route](#-3-present-a-route)
 - [4. Dismiss or navigate](#-4-dismiss-or-navigate)
@@ -93,7 +93,7 @@ To try it out:
 
 ---
 
-## ✅ 1. Add `.bottomDrawer()` to your root view
+## ✅ 1. Choose Your Integration: Modifier or SceneDelegate
 
 Apply the bottomDrawer(style:) modifier to your top-level view (usually in your App entry point):
 
@@ -114,6 +114,43 @@ struct MyApp: App {
 
 > You can inject the router using .injectBottomDrawerRouter() or, alternatively, with .environment(\.bottomDrawerRouter, ...).
 
+### 🧭 How to show `.card` above modals
+
+To present `.card` on top of `.sheet` or `.fullScreenCover`, you must register **BottomDrawerKit** at the scene level:
+
+```swift
+@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        let config = UISceneConfiguration(name: nil, sessionRole: session.role)
+        config.delegateClass = BottomDrawerSceneDelegate.self
+        return config
+    }
+}
+```
+
+This setup allows BottomDrawerKit to attach a floating card window above your app — even above modals and full-screen covers.
+
+### ⚠️ Important Style Behavior
+
+> 🧩 Choose your integration mode:
+>
+> - Use `.bottomDrawer(style:)` to inject into your SwiftUI view hierarchy.
+>   - ✅ Supports both `.drawer` and `.card`
+>   - ❌ `.card` will be covered by `.sheet` and `.fullScreenCover`
+>
+> - Use the `AppDelegate + SceneDelegate` setup to float above everything.
+>   - ✅ Required if you want `.card` to appear *above* modals
+>   - ❌ Only supports `.card` — `.drawer` is not available in this mode
+
+#### Summary:
+- `.drawer` mimics system sheets, and works out of the box with `.bottomDrawer(style: .drawer)`
+- `.card` floats above everything — but **only when** using AppDelegate + SceneDelegate setup
 
 ---
 
