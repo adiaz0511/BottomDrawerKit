@@ -16,7 +16,7 @@ extension View {
     }
 }
 
-public class BottomDrawerSceneDelegate: NSObject, UIWindowSceneDelegate {
+open class BottomDrawerSceneDelegate: NSObject, UIWindowSceneDelegate {
     open var window: UIWindow?
 
     open func scene(
@@ -50,7 +50,6 @@ final class DrawerWindow: UIWindow {
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        print("POINT INSIDE: \(point), EVENT: \(String(describing: event))")
         return super.hitTest(point, with: event)
     }
 }
