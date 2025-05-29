@@ -16,7 +16,7 @@ extension View {
     }
 }
 
-open class BottomDrawerSceneDelegate: NSObject, UIWindowSceneDelegate {
+public class BottomDrawerSceneDelegate: NSObject, UIWindowSceneDelegate {
     open var window: UIWindow?
 
     open func scene(
