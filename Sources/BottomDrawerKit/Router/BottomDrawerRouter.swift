@@ -162,7 +162,6 @@ public final class BottomDrawerRouter: @unchecked Sendable {
                 if BottomDrawerRouter.loggingEnabled {
                     print("[BottomDrawerRouter] Stack after dismiss: \(self.stack)")
                 }
-                self.content = nil
                 onRouteChange?(.dismiss, stack)
             }
         }
