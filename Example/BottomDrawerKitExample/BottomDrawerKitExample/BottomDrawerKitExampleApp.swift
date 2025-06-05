@@ -17,7 +17,7 @@ struct BottomDrawerKitExampleApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(style: $style)
-                .bottomDrawer(style: .drawer)
+                .bottomDrawer(style: style)
                 .injectBottomDrawerRouter()
                 .drawerButtonContext(buttonContext)
                 .bottomDrawerStyle(
